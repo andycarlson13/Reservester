@@ -13,3 +13,6 @@
  *= require_tree .
  *= require_self
  */
+.sign-in-sign-out {
+	float: right;
+}
