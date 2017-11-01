@@ -9,6 +9,16 @@
   </head>
 
   <body>
+  <p class="notice"><%= notice %></p>
+  	<% if !current_user %>
+        <div class="sign-in-out" id="sign-in">
+        <%= link_to "Sign In", new_user_session_path %>
+    <% else %>
+        <div class="sign-in-out" id="sign-out">
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+    <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>

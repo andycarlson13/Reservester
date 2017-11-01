@@ -1,6 +1,7 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, except: [:index]
+  before_action :check_correct_user, only: [:edit, :update, :destroy]
   # GET /restaurants
   # GET /restaurants.json
   def index
@@ -25,6 +26,7 @@ class RestaurantsController < ApplicationController
   # POST /restaurants.json
   def create
     @restaurant = Restaurant.new(restaurant_params)
+    @restaurant.user = current_user
 
     respond_to do |format|
       if @restaurant.save
@@ -50,10 +52,6 @@ class RestaurantsController < ApplicationController
       end
     end
   end
-  def google_map(center)
-  "https://maps.googleapis.com/maps/api/staticmap?center=#{center}&size=300x300&zoom=17"
-  end
-
   # DELETE /restaurants/1
   # DELETE /restaurants/1.json
   def destroy
@@ -74,4 +72,9 @@ class RestaurantsController < ApplicationController
     def restaurant_params
       params.require(:restaurant).permit(:phone, :name, :genre, :street, :city, :state, :zipcode)
     end
+    def check_correct_user
+      unless current_user && @restaurant.user == current_user
+         redirect_to restaurant_url, notice: 'You can\'t edit that restaurant'
+       end
+     end
 end

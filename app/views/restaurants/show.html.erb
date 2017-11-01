@@ -34,8 +34,8 @@
   <strong>Zipcode:</strong>
   <%= @restaurant.zipcode %>
 </p>
-<p>
+
 <%= image_tag @restaurant.google_map(center:  @restaurant.street + ', ' + @restaurant.city + ', ' + @restaurant.state + ', ' + @restaurant.zipcode) %>
-</p>
+</br> 
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
 <%= link_to 'Back', restaurants_path %>
