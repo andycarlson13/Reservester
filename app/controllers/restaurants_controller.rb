@@ -61,16 +61,18 @@ class RestaurantsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def myrestaurants
+    my_restaurants = current_user.restaurants
+  end  
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant
       @restaurant = Restaurant.find(params[:id])
     end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
-      params.require(:restaurant).permit(:phone, :name, :genre, :street, :city, :state, :zipcode)
+      params.require(:restaurant).permit(:phone, :name, :genre, :street, :city, :state, :zipcode, :photo)
     end
     def check_correct_user
       unless current_user && @restaurant.user == current_user
